@@ -1,0 +1,74 @@
+﻿@using System.Collections.Specialized
+@using sqlQueryWeb.MainLogic
+@model sqlQueryWeb.MainLogic.SqlConnUtil
+@{
+    ViewBag.Title = "Query Page";
+}
+
+<section>
+    <div id="leftView" class="panel panel-primary lt-leftPanel left-side sticky-left-side">
+        <div class="panel-heading">
+            <h3 class="panel-title">@Model.DBHost 上的数据库</h3>
+        </div>
+        @*左树*@
+        <div class="panel-body lt-scroll" id="dbTree">
+            <ul>
+                @{ var lDBs = Model.GetAllDatabases(); }
+                @foreach (var sdb in lDBs)
+                {
+                    <li data-jstree='{"icon":"/images/iconDB.png"}'>@sdb
+                        <ul>
+                            <li data-jstree='{"icon":""}'>数据表
+                                <ul>
+                                    <li data-jstree='{"icon":"/images/iconTab.png"}'>正在加载... </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+<div class="main-content">
+    <!--body wrapper start-->
+    <div class="wrapper">
+        <div class="col-md-12 panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    数据表<span data-bind='if: curTable'>[<span data-bind='text: curTable'></span>]</span>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <!-- 数据表内容 -->
+                <div class="table-responsive" id="table_detail_panel">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--body wrapper end-->
+    <footer class="sticky-footer">2017 &copy; Goldpac</footer>
+</div>
+</section>
+
+
+
+@*<script type="text/javascript">
+    treeModel = @Html.Raw(ModelHelper.GetDBTreeModel(Model));
+    console.log("jstree, treeModel= " + treeModel.toString); //!
+</script>*@
+
+
+@section Styles{
+    @Styles.Render("~/Content/bootstrapcss")
+    @Styles.Render("~/Content/myCSS")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/myJS")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/Scripts/ViewModels/leftTree.js")
+}
+

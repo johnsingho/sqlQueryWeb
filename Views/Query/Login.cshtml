@@ -1,0 +1,54 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "SqlQuery Login";
+    //Layout = null;
+}
+
+<style type="text/css">
+    label.error { display: block; color: Red; }    
+</style>
+
+<div class="container">
+
+    <form class="form-signin">
+        <div class="form-signin-heading text-center">
+            <h1 class="sign-title">连接到</h1>
+            <img src="~/images/bannner.png" alt="" />
+        </div>
+
+        <div class="login-wrap">
+            <input type="text" class="form-control required" placeholder="sql Server服务器" autofocus data-bind="textInput: sHost, uniqueName: true"/>
+            <input type="text" class="form-control required" placeholder="登录用户名" autofocus data-bind="textInput: sUser, uniqueName: true"/>
+            <input type="password" class="form-control required" placeholder="登录密码" data-bind="textInput: sPassword, uniqueName: true"/>
+            <button class="btn btn-lg btn-login btn-block" type="submit">
+                连接
+            </button>
+
+        </div>
+
+    </form>
+</div>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/Scripts/ViewModels/login_vm.js")
+    
+<script type="text/javascript">
+    var viewModel = new LoginViewModel();
+    ko.applyBindings(viewModel);
+
+@*  //for test
+    viewModel.sHost("10.165.1.231");
+    viewModel.sUser("sa");
+    viewModel.sPassword("super.123");
+*@
+    $("form").validate({
+        submitHandler: viewModel.doQuery
+    });
+</script>
+}
+
+

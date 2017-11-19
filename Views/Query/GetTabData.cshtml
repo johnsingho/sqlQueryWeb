@@ -1,0 +1,39 @@
+﻿@model sqlQueryWeb.Models.TableInfo
+@{
+    Layout = null;
+}
+
+@if (null == @Model)
+{
+    <h3 class="text-danger">获取数据失败</h3>
+}
+else
+{
+@*<h3>数据表内容子视图</h3>*@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @foreach (var item in Model.Cols)
+            {
+                <th>@item</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var row in Model.Rows)
+            {
+                <tr>
+                    @foreach (var val in row)
+                    {
+                     <td class="text-left myTabCell">@val</td>   
+                    }
+                </tr>
+            }
+        
+    </tbody>
+</table>   
+     if(0 == Model.Rows.Count)
+     {
+         <h3 class="text-warning">没有数据</h3>
+     }
+}    
